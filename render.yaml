@@ -1,0 +1,18 @@
+# Render Blueprint — deploys The Tiebreaker as a single always-on web service.
+# Render runs the full FastAPI app (uvicorn), which serves both the /api routes
+# and the static frontend in public/ — no serverless split, no request-timeout
+# ceiling. Import this repo at https://render.com → New → Blueprint.
+services:
+  - type: web
+    name: the-tiebreaker
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    # Run from api/ so `index:app` imports its sibling _* modules; the app
+    # resolves public/ via an absolute path, so static serving works regardless.
+    startCommand: cd api && uvicorn index:app --host 0.0.0.0 --port $PORT
+    envVars:
+      # Set this in the Render dashboard (or paste when prompted on first deploy)
+      # to enable real Claude analysis. Without it, the app runs in demo mode.
+      - key: ANTHROPIC_API_KEY
+        sync: false
