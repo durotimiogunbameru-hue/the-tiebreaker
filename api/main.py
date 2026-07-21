@@ -1,5 +1,5 @@
 """
-app.py — The Tiebreaker web application.
+main.py — The Tiebreaker web application (FastAPI app).
 
 A FastAPI server that:
   - exposes POST /api/analyze, the single decision-intelligence endpoint, and

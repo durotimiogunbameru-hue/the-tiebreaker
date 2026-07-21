@@ -27,16 +27,15 @@ public/              Static single-page app (HTML + CSS + vanilla JS)
   index.html
   styles.css
   app.js
-backend/             FastAPI service
-  app.py             API + serves the frontend as one deployable unit
+api/                 FastAPI service — self-contained so it deploys as one
+  index.py           Entry point (exports the ASGI `app`; Vercel + local target)
+  main.py            API routes; serves the frontend when run locally
   prompts.py         Prompt-optimization layer (system prompt + JSON schema)
   llm.py             LLM bridge: Claude (Structured Outputs) OR deterministic mock
   analysis.py        Weighted priority scoring (pure, testable Python)
-  requirements.txt
-  .env.example
-api/index.py         Vercel serverless entry point (reuses the FastAPI app)
 vercel.json          Vercel routing + function config
-requirements.txt     Root deps (used by Vercel)
+requirements.txt     Dependencies (used by Vercel and the local launchers)
+.env.example         Copy to .env to add your Claude API key
 run.ps1 / run.sh     One-command local launchers
 ```
 
@@ -76,8 +75,7 @@ installs dependencies, and starts the server.
 Demo mode needs no key. For real analysis:
 
 ```bash
-cd backend
-cp .env.example .env      # then paste your key into .env
+cp .env.example .env      # then paste your key into .env (project root)
 ```
 
 Get a key from <https://console.anthropic.com>. The badge in the app header
@@ -113,8 +111,8 @@ The app is also a single FastAPI service that serves the frontend, so it runs
 anywhere Python does — a better fit if you want no request-timeout ceiling:
 
 ```bash
-pip install -r backend/requirements.txt
-cd backend && uvicorn app:app --host 0.0.0.0 --port $PORT
+pip install -r requirements.txt
+cd api && uvicorn index:app --host 0.0.0.0 --port $PORT
 ```
 
 Set `ANTHROPIC_API_KEY` in the host's environment to enable Claude.

@@ -1,6 +1,8 @@
-# Root requirements — used by Vercel's Python runtime to build the serverless
-# function in api/index.py. Kept in sync with backend/requirements.txt (which
-# the local run.ps1 / run.sh launchers use).
+# Single dependency list — used by Vercel's Python runtime (for the function in
+# api/index.py) and by the local run.ps1 / run.sh launchers. uvicorn is only
+# needed locally; Vercel provides its own ASGI server but installing it is
+# harmless.
 fastapi==0.115.6
+uvicorn[standard]==0.34.0
 pydantic==2.10.4
 anthropic>=0.69.0

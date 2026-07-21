@@ -15,15 +15,15 @@ py="$root/.venv/bin/python"
 # 2. Dependencies
 echo "Installing dependencies..."
 "$py" -m pip install --quiet --upgrade pip
-"$py" -m pip install --quiet -r "$root/backend/requirements.txt"
+"$py" -m pip install --quiet -r "$root/requirements.txt"
 
 # 3. Load .env if present
-if [ -f "$root/backend/.env" ]; then
+if [ -f "$root/.env" ]; then
   set -a
   # shellcheck disable=SC1091
-  . "$root/backend/.env"
+  . "$root/.env"
   set +a
-  echo "Loaded backend/.env"
+  echo "Loaded .env"
 fi
 
 # 4. Launch
@@ -34,5 +34,5 @@ else
 fi
 echo "Open http://localhost:8000 in your browser."
 
-cd "$root/backend"
-exec "$py" -m uvicorn app:app --host 0.0.0.0 --port 8000 --reload
+cd "$root/api"
+exec "$py" -m uvicorn index:app --host 0.0.0.0 --port 8000 --reload
