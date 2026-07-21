@@ -3,10 +3,10 @@
   "functions": {
     "api/index.py": {
       "maxDuration": 60,
-      "includeFiles": "{api/_*.py,public/**}"
+      "includeFiles": "api/_*.py"
     }
   },
   "rewrites": [
-    { "source": "/(.*)", "destination": "/api/index" }
+    { "source": "/api/(.*)", "destination": "/api/index" }
   ]
 }
