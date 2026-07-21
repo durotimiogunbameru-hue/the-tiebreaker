@@ -11,8 +11,10 @@ Flow:
            -> analysis.compute_priority (weighted SWOT + priority list)
            -> structured JSON -> frontend renders matrices + rankings
 
-The static single-page frontend in public/ is served by Vercel's CDN in
-production, and by this app's StaticFiles mount when run locally.
+The static single-page frontend lives in web/ (NOT public/, which Vercel
+reserves for its own CDN). web/ is bundled with the function via
+vercel.json's includeFiles, and this app's StaticFiles mount serves it in
+both production and local dev.
 """
 
 from __future__ import annotations
@@ -38,7 +40,7 @@ import _llm as llm
 
 app = FastAPI(title="The Tiebreaker", version="1.0.0")
 
-FRONTEND_DIR = Path(__file__).resolve().parent.parent / "public"
+FRONTEND_DIR = Path(__file__).resolve().parent.parent / "web"
 
 
 # --------------------------------------------------------------------------- #
@@ -133,8 +135,8 @@ def analyze(req: AnalyzeRequest) -> dict:
 
 
 # --------------------------------------------------------------------------- #
-# Static frontend — served locally; on Vercel the CDN serves public/ directly.
-# Mounted last so /api/* routes take precedence.
+# Static frontend from web/ (bundled with the function). Mounted last so the
+# /api/* routes take precedence over the catch-all static mount.
 # --------------------------------------------------------------------------- #
 @app.get("/")
 def index():

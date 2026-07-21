@@ -23,7 +23,7 @@ functional **deterministic demo mode** so it works end-to-end with zero setup.
 ## Architecture
 
 ```
-public/              Static single-page app (HTML + CSS + vanilla JS)
+web/                 Static single-page app (HTML + CSS + vanilla JS)
   index.html
   styles.css
   app.js
@@ -86,13 +86,14 @@ shows which engine is live.
 
 ### Vercel
 
-The repo is set up for Vercel out of the box: the static frontend in `public/`
-is served by Vercel's CDN, and `api/index.py` runs the FastAPI app as a Python
-serverless function (`vercel.json` routes `/api/*` to it).
+The repo is set up for Vercel out of the box: `api/index.py` runs the FastAPI
+app as a Python serverless function, and it serves both the API and the static
+frontend in `web/` (bundled with the function; `vercel.json` routes all
+requests to it).
 
 1. Push the project to a Git repo (GitHub/GitLab/Bitbucket).
 2. In Vercel: **New Project → Import** the repo. No framework preset or build
-   command needed — Vercel detects `public/` (static) and `api/` (Python).
+   command needed — Vercel detects `api/` (Python) and reads `vercel.json`.
 3. Add an environment variable **`ANTHROPIC_API_KEY`** (Settings → Environment
    Variables) to enable real Claude analysis. Without it, the deploy still works
    in demo/mock mode.
