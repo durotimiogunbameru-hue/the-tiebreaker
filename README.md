@@ -10,7 +10,7 @@ matrix** for every option and a **multi-variable weighted priority ranking**.
 It runs on the Claude API when a key is present, and ships with a fully
 functional **deterministic demo mode** so it works end-to-end with zero setup.
 
-![The Tiebreaker — verdict, weighted priority ranking, and SWOT matrices](docs/preview.svg)
+![The Tiebreaker — live app](docs/screenshot.png)
 
 ---
 
@@ -23,6 +23,13 @@ functional **deterministic demo mode** so it works end-to-end with zero setup.
   the ranking reflects *your* priorities.
 - **A clear verdict** — the single best option with a confidence level and a
   rationale grounded in the criteria that decided it.
+
+### Sample output
+
+Given a decision and weighted criteria, The Tiebreaker returns a verdict, a
+weighted priority ranking, and a SWOT matrix per option:
+
+![Sample output — verdict, weighted priority ranking, and SWOT matrices](docs/preview.svg)
 
 ## Architecture
 
