@@ -29,7 +29,7 @@ from pathlib import Path
 from typing import Optional
 
 from fastapi import FastAPI, HTTPException
-from fastapi.responses import FileResponse
+from fastapi.responses import FileResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field, field_validator
 
@@ -137,8 +137,23 @@ def analyze(req: AnalyzeRequest) -> dict:
 # Mounted last so /api/* routes take precedence.
 # --------------------------------------------------------------------------- #
 @app.get("/")
-def index() -> FileResponse:
-    return FileResponse(FRONTEND_DIR / "index.html")
+def index():
+    idx = FRONTEND_DIR / "index.html"
+    if idx.exists():
+        return FileResponse(idx)
+    # Diagnostic: the frontend wasn't bundled where expected. Report what IS
+    # visible so the deploy config can be corrected (instead of a blank 500).
+    info = {
+        "error": "Frontend index.html not found in the deployment bundle.",
+        "frontend_dir": str(FRONTEND_DIR),
+        "cwd": os.getcwd(),
+    }
+    for label, path in (("frontend_dir", FRONTEND_DIR), ("parent", FRONTEND_DIR.parent), ("cwd", Path(os.getcwd()))):
+        try:
+            info[f"listing_{label}"] = sorted(os.listdir(path))
+        except Exception as exc:  # noqa: BLE001
+            info[f"listing_{label}"] = f"<{exc}>"
+    return JSONResponse(info, status_code=500)
 
 
 if FRONTEND_DIR.exists():
