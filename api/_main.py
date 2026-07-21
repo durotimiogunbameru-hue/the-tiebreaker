@@ -21,8 +21,8 @@ from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field, field_validator
 
-import analysis
-import llm
+import _analysis as analysis
+import _llm as llm
 
 app = FastAPI(title="The Tiebreaker", version="1.0.0")
 

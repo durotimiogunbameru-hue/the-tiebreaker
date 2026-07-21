@@ -29,10 +29,12 @@ public/              Static single-page app (HTML + CSS + vanilla JS)
   app.js
 api/                 FastAPI service — self-contained so it deploys as one
   index.py           Entry point (exports the ASGI `app`; Vercel + local target)
-  main.py            API routes; serves the frontend when run locally
-  prompts.py         Prompt-optimization layer (system prompt + JSON schema)
-  llm.py             LLM bridge: Claude (Structured Outputs) OR deterministic mock
-  analysis.py        Weighted priority scoring (pure, testable Python)
+  _main.py           API routes; serves the frontend when run locally
+  _prompts.py        Prompt-optimization layer (system prompt + JSON schema)
+  _llm.py            LLM bridge: Claude (Structured Outputs) OR deterministic mock
+  _analysis.py       Weighted priority scoring (pure, testable Python)
+                     (helpers are _-prefixed so Vercel treats them as shared
+                      modules, not separate function endpoints)
 vercel.json          Vercel routing + function config
 requirements.txt     Dependencies (used by Vercel and the local launchers)
 .env.example         Copy to .env to add your Claude API key

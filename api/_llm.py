@@ -23,7 +23,7 @@ import hashlib
 import os
 from typing import Any
 
-from prompts import SYSTEM_PROMPT, build_output_schema, build_user_prompt
+from _prompts import SYSTEM_PROMPT, build_output_schema, build_user_prompt
 
 # Default to the latest and most capable Claude model. Override with the
 # CLAUDE_MODEL env var if you want to trade some quality for lower cost.

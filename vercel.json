@@ -3,7 +3,7 @@
   "functions": {
     "api/index.py": {
       "maxDuration": 60,
-      "includeFiles": "public/**"
+      "includeFiles": "api/_*.py"
     }
   },
   "rewrites": [
