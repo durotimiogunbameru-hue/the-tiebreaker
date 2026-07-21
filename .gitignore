@@ -1,0 +1,21 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+
+# Environment / secrets
+.env
+*.env
+!*.env.example
+
+# Vercel
+.vercel/
+
+# Local tooling / editor / OS
+.claude/
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

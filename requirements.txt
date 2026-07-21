@@ -1,0 +1,6 @@
+# Root requirements — used by Vercel's Python runtime to build the serverless
+# function in api/index.py. Kept in sync with backend/requirements.txt (which
+# the local run.ps1 / run.sh launchers use).
+fastapi==0.115.6
+pydantic==2.10.4
+anthropic>=0.69.0

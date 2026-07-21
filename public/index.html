@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Tiebreaker — AI Decision Support</title>
+  <meta name="description" content="Turn a decision you're stuck on into a structured SWOT analysis and a weighted priority ranking, powered by an LLM." />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%9A%96%EF%B8%8F%3C/text%3E%3C/svg%3E" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="brand">
+      <span class="brand-mark">⚖️</span>
+      <div>
+        <h1>The Tiebreaker</h1>
+        <p class="tagline">AI decision support — SWOT matrices &amp; weighted priorities</p>
+      </div>
+    </div>
+    <span id="engine-badge" class="badge" title="Which engine is analyzing your decision"></span>
+  </header>
+
+  <main>
+    <!-- ---------------- Input panel ---------------- -->
+    <section class="panel" id="input-panel">
+      <p class="intro">
+        Stuck between options? Describe the decision, list what you're choosing
+        between, and tell it what matters. You'll get a SWOT matrix for each
+        option and a data-driven priority ranking.
+      </p>
+
+      <form id="decision-form" novalidate>
+        <label class="field">
+          <span class="field-label">The decision</span>
+          <textarea id="question" rows="2" maxlength="2000"
+            placeholder="e.g. Should I take the startup offer or stay at my current job?"></textarea>
+        </label>
+
+        <div class="field">
+          <div class="field-header">
+            <span class="field-label">Options</span>
+            <button type="button" class="ghost-btn" id="add-option">+ Add option</button>
+          </div>
+          <div id="options-list"></div>
+        </div>
+
+        <div class="field">
+          <div class="field-header">
+            <span class="field-label">Criteria &amp; importance</span>
+            <button type="button" class="ghost-btn" id="add-criterion">+ Add criterion</button>
+          </div>
+          <p class="hint">Slide to set how much each one matters (1–5). Leave empty to use sensible defaults.</p>
+          <div id="criteria-list"></div>
+        </div>
+
+        <div class="actions">
+          <button type="submit" class="primary-btn" id="analyze-btn">
+            <span class="btn-label">Break the tie</span>
+          </button>
+          <button type="button" class="ghost-btn" id="example-btn">Load an example</button>
+        </div>
+        <p id="form-error" class="form-error" role="alert"></p>
+      </form>
+    </section>
+
+    <!-- ---------------- Results ---------------- -->
+    <section id="results" class="results hidden" aria-live="polite"></section>
+  </main>
+
+  <footer class="site-footer">
+    <p>The Tiebreaker · a personal portfolio project · transforms qualitative choices into structured, data-driven outcomes.</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
