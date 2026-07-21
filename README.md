@@ -28,8 +28,7 @@ public/              Static single-page app (HTML + CSS + vanilla JS)
   styles.css
   app.js
 api/                 FastAPI service — self-contained so it deploys as one
-  index.py           Entry point (exports the ASGI `app`; Vercel + local target)
-  _main.py           API routes; serves the frontend when run locally
+  index.py           The FastAPI app + entry point (defines the ASGI `app`)
   _prompts.py        Prompt-optimization layer (system prompt + JSON schema)
   _llm.py            LLM bridge: Claude (Structured Outputs) OR deterministic mock
   _analysis.py       Weighted priority scoring (pure, testable Python)

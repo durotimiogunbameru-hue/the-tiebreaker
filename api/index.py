@@ -1,34 +1,145 @@
 """
-api/index.py — Vercel serverless entry point (also the local uvicorn target).
+api/index.py — The Tiebreaker web application (FastAPI app + Vercel entry point).
 
-Vercel serves the ASGI `app` exported here for every /api/* request (see
-vercel.json). If importing the real application fails for any reason, we expose
-a *real FastAPI* fallback app (which Vercel reliably recognizes as ASGI) whose
-routes return the startup traceback as plain text — so the failure is readable
-in the browser at /api/health instead of Vercel's opaque crash page.
+This file is the ASGI entry point for both local uvicorn and Vercel. Vercel's
+build statically inspects the entry file and requires a top-level `app` that is
+a FastAPI instance, so the app is defined *here* directly (not re-exported from
+another module).
+
+Flow:
+  frontend -> POST /api/analyze -> llm.analyze_decision (Claude or mock)
+           -> analysis.compute_priority (weighted SWOT + priority list)
+           -> structured JSON -> frontend renders matrices + rankings
+
+The static single-page frontend in public/ is served by Vercel's CDN in
+production, and by this app's StaticFiles mount when run locally.
 """
+
+from __future__ import annotations
 
 import os
 import sys
 
 # Vercel does not put a function's own directory on sys.path — add it so the
-# `_main` / `_analysis` / `_llm` / `_prompts` modules resolve at runtime.
+# sibling helper modules (_analysis, _llm, _prompts) resolve at runtime. Must
+# run before importing them.
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-try:
-    from _main import app  # the real FastAPI app (a proper ASGI application)
-except Exception:  # noqa: BLE001 — surface ANY startup failure to the client
-    import traceback
+from pathlib import Path
+from typing import Optional
 
-    from fastapi import FastAPI
-    from fastapi.responses import PlainTextResponse
+from fastapi import FastAPI, HTTPException
+from fastapi.responses import FileResponse
+from fastapi.staticfiles import StaticFiles
+from pydantic import BaseModel, Field, field_validator
 
-    _startup_error = traceback.format_exc()
-    app = FastAPI()
+import _analysis as analysis
+import _llm as llm
 
-    @app.get("/{full_path:path}")
-    def _report_startup_error(full_path: str) -> PlainTextResponse:
-        return PlainTextResponse(
-            "The Tiebreaker failed to start.\n\n" + _startup_error,
-            status_code=500,
-        )
+app = FastAPI(title="The Tiebreaker", version="1.0.0")
+
+FRONTEND_DIR = Path(__file__).resolve().parent.parent / "public"
+
+
+# --------------------------------------------------------------------------- #
+# Request / response models
+# --------------------------------------------------------------------------- #
+class CriterionIn(BaseModel):
+    name: str
+    weight: float = Field(default=3.0, ge=0, le=5)
+
+    @field_validator("name")
+    @classmethod
+    def _strip(cls, v: str) -> str:
+        return v.strip()
+
+
+class AnalyzeRequest(BaseModel):
+    question: str = Field(..., min_length=3, max_length=2000)
+    options: list[str] = Field(..., min_length=2, max_length=6)
+    criteria: Optional[list[CriterionIn]] = None
+
+    @field_validator("options")
+    @classmethod
+    def _clean_options(cls, v: list[str]) -> list[str]:
+        cleaned = [o.strip() for o in v if o and o.strip()]
+        if len(cleaned) < 2:
+            raise ValueError("Provide at least two distinct options.")
+        if len(set(o.lower() for o in cleaned)) != len(cleaned):
+            raise ValueError("Options must be distinct.")
+        return cleaned
+
+
+# Sensible default criteria so the app works even if the user adds none.
+DEFAULT_CRITERIA = [
+    analysis.Criterion("Overall upside", 4.0),
+    analysis.Criterion("Cost / effort", 3.0),
+    analysis.Criterion("Risk", 3.0),
+    analysis.Criterion("Alignment with my goals", 4.0),
+]
+
+
+# --------------------------------------------------------------------------- #
+# API
+# --------------------------------------------------------------------------- #
+@app.get("/api/health")
+def health() -> dict:
+    return {"status": "ok", "engine": "claude" if llm.has_api_key() else "mock"}
+
+
+@app.post("/api/analyze")
+def analyze(req: AnalyzeRequest) -> dict:
+    # Resolve criteria: use the user's, or fall back to sensible defaults.
+    if req.criteria:
+        criteria = [
+            analysis.Criterion(c.name, c.weight) for c in req.criteria if c.name
+        ]
+    else:
+        criteria = []
+    if not criteria:
+        criteria = list(DEFAULT_CRITERIA)
+
+    criteria_names = [c.name for c in criteria]
+
+    # 1. Ask the model (or the mock) for the raw SWOT + per-criterion scores.
+    try:
+        raw, engine = llm.analyze_decision(req.question, req.options, criteria_names)
+    except RuntimeError as exc:
+        raise HTTPException(status_code=422, detail=str(exc)) from exc
+    except Exception as exc:  # network / API / parse failures
+        raise HTTPException(
+            status_code=502,
+            detail=f"The analysis engine failed: {exc}",
+        ) from exc
+
+    # 2. Compute the weighted priority list from the raw scores.
+    results, warnings = analysis.compute_priority(
+        req.options, criteria, raw.get("swot", []), raw.get("scores", [])
+    )
+    weights = analysis.normalize_weights(criteria)
+
+    # 3. Assemble the structured response the frontend renders.
+    return {
+        "engine": engine,
+        "question": req.question,
+        "criteria": [
+            {"name": c.name, "weight": c.weight, "normalized": round(weights[c.name], 3)}
+            for c in criteria
+        ],
+        "results": analysis.serialize(results, weights),
+        "recommendation": raw.get("recommendation", {}),
+        "warnings": warnings,
+    }
+
+
+# --------------------------------------------------------------------------- #
+# Static frontend — served locally; on Vercel the CDN serves public/ directly.
+# Mounted last so /api/* routes take precedence.
+# --------------------------------------------------------------------------- #
+@app.get("/")
+def index() -> FileResponse:
+    return FileResponse(FRONTEND_DIR / "index.html")
+
+
+if FRONTEND_DIR.exists():
+    app.mount("/", StaticFiles(directory=str(FRONTEND_DIR), html=True), name="static")
