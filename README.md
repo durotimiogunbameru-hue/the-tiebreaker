@@ -5,8 +5,12 @@ list the options, and tell it what matters — The Tiebreaker turns those
 qualitative choices into structured, data-driven outcomes: a **SWOT analysis
 matrix** for every option and a **multi-variable weighted priority ranking**.
 
+**🔗 Live demo: [the-tiebreaker-six.vercel.app](https://the-tiebreaker-six.vercel.app)**
+
 It runs on the Claude API when a key is present, and ships with a fully
 functional **deterministic demo mode** so it works end-to-end with zero setup.
+
+![The Tiebreaker — verdict, weighted priority ranking, and SWOT matrices](docs/preview.svg)
 
 ---
 

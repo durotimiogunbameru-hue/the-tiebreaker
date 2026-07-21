@@ -1,0 +1,153 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="820" viewBox="0 0 1200 820" font-family="Segoe UI, system-ui, -apple-system, Roboto, Helvetica, Arial, sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#131b2e"/>
+      <stop offset="0.5" stop-color="#0f1420"/>
+      <stop offset="1" stop-color="#141024"/>
+    </linearGradient>
+    <linearGradient id="panel" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1a2233"/>
+      <stop offset="1" stop-color="#161d2b"/>
+    </linearGradient>
+    <linearGradient id="verdict" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#2a2412"/>
+      <stop offset="1" stop-color="#1b1c1a"/>
+    </linearGradient>
+    <linearGradient id="amber" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f6c479"/>
+      <stop offset="1" stop-color="#f4b860"/>
+    </linearGradient>
+    <linearGradient id="bar" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#6ea8fe"/>
+      <stop offset="1" stop-color="#4ec6b3"/>
+    </linearGradient>
+    <linearGradient id="leader" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#241f10"/>
+      <stop offset="1" stop-color="#1a2233"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="820" fill="url(#bg)"/>
+
+  <!-- Header -->
+  <text x="48" y="58" font-size="34">⚖️</text>
+  <text x="92" y="52" fill="#e8edf6" font-size="27" font-weight="700" letter-spacing="-0.5">The Tiebreaker</text>
+  <text x="92" y="74" fill="#9aa7bd" font-size="14.5">AI decision support — SWOT matrices &amp; weighted priorities</text>
+  <rect x="1012" y="34" width="140" height="30" rx="15" fill="rgba(120,90,220,0.12)" stroke="#5b46a8"/>
+  <text x="1082" y="54" fill="#d7c4ff" font-size="12.5" font-weight="600" text-anchor="middle">Claude connected</text>
+  <line x1="48" y1="100" x2="1152" y2="100" stroke="#2c3850"/>
+
+  <!-- Verdict -->
+  <rect x="48" y="126" width="1104" height="120" rx="14" fill="url(#verdict)" stroke="#4a3a17"/>
+  <text x="74" y="160" fill="#f4b860" font-size="12" font-weight="700" letter-spacing="2">THE VERDICT</text>
+  <text x="74" y="196" fill="#e8edf6" font-size="27" font-weight="700">Lean toward <tspan fill="#f4b860">Join the startup</tspan></text>
+  <rect x="404" y="176" width="150" height="26" rx="13" fill="rgba(244,184,96,0.14)" stroke="#6b5326"/>
+  <text x="479" y="194" fill="#f4b860" font-size="12" font-weight="700" text-anchor="middle">medium confidence</text>
+  <text x="74" y="226" fill="#9aa7bd" font-size="14.5">Long-term growth and day-to-day enjoyment — your two highest-weighted criteria — favor the startup, despite weaker job security.</text>
+
+  <!-- Priority ranking -->
+  <text x="48" y="290" fill="#e8edf6" font-size="18" font-weight="700">Weighted priority ranking</text>
+  <text x="48" y="312" fill="#66748e" font-size="13.5">Each option scored 0–10 per criterion, weighted by how much it matters to you.</text>
+
+  <!-- Card 1 (leader) -->
+  <rect x="48" y="330" width="540" height="196" rx="12" fill="url(#leader)" stroke="#6b5326"/>
+  <text x="72" y="364" fill="#66748e" font-size="13" font-weight="600">#1</text>
+  <text x="100" y="365" fill="#e8edf6" font-size="16.5" font-weight="700">Join the startup</text>
+  <text x="564" y="366" fill="#e8edf6" font-size="20" font-weight="800" text-anchor="end">7.3<tspan fill="#66748e" font-size="12" font-weight="600"> / 10</tspan></text>
+  <!-- bars -->
+  <g font-size="13">
+    <text x="72" y="400" fill="#9aa7bd">Long-term growth</text>
+    <rect x="230" y="393" width="280" height="9" rx="4.5" fill="#0f1420"/>
+    <rect x="230" y="393" width="252" height="9" rx="4.5" fill="url(#bar)"/>
+    <text x="564" y="401" fill="#9aa7bd" text-anchor="end" font-weight="600">9</text>
+
+    <text x="72" y="428" fill="#9aa7bd">Day-to-day enjoyment</text>
+    <rect x="230" y="421" width="280" height="9" rx="4.5" fill="#0f1420"/>
+    <rect x="230" y="421" width="224" height="9" rx="4.5" fill="url(#bar)"/>
+    <text x="564" y="429" fill="#9aa7bd" text-anchor="end" font-weight="600">8</text>
+
+    <text x="72" y="456" fill="#9aa7bd">Compensation</text>
+    <rect x="230" y="449" width="280" height="9" rx="4.5" fill="#0f1420"/>
+    <rect x="230" y="449" width="168" height="9" rx="4.5" fill="url(#bar)"/>
+    <text x="564" y="457" fill="#9aa7bd" text-anchor="end" font-weight="600">6</text>
+
+    <text x="72" y="484" fill="#9aa7bd">Work-life balance</text>
+    <rect x="230" y="477" width="280" height="9" rx="4.5" fill="#0f1420"/>
+    <rect x="230" y="477" width="140" height="9" rx="4.5" fill="url(#bar)"/>
+    <text x="564" y="485" fill="#9aa7bd" text-anchor="end" font-weight="600">5</text>
+
+    <text x="72" y="512" fill="#9aa7bd">Job security</text>
+    <rect x="230" y="505" width="280" height="9" rx="4.5" fill="#0f1420"/>
+    <rect x="230" y="505" width="84" height="9" rx="4.5" fill="url(#bar)"/>
+    <text x="564" y="513" fill="#9aa7bd" text-anchor="end" font-weight="600">3</text>
+  </g>
+
+  <!-- Card 2 -->
+  <rect x="612" y="330" width="540" height="196" rx="12" fill="url(#panel)" stroke="#2c3850"/>
+  <text x="636" y="364" fill="#66748e" font-size="13" font-weight="600">#2</text>
+  <text x="664" y="365" fill="#e8edf6" font-size="16.5" font-weight="700">Stay at current job</text>
+  <text x="1128" y="366" fill="#e8edf6" font-size="20" font-weight="800" text-anchor="end">6.1<tspan fill="#66748e" font-size="12" font-weight="600"> / 10</tspan></text>
+  <g font-size="13">
+    <text x="636" y="400" fill="#9aa7bd">Long-term growth</text>
+    <rect x="794" y="393" width="280" height="9" rx="4.5" fill="#0f1420"/>
+    <rect x="794" y="393" width="112" height="9" rx="4.5" fill="url(#bar)"/>
+    <text x="1128" y="401" fill="#9aa7bd" text-anchor="end" font-weight="600">4</text>
+
+    <text x="636" y="428" fill="#9aa7bd">Day-to-day enjoyment</text>
+    <rect x="794" y="421" width="280" height="9" rx="4.5" fill="#0f1420"/>
+    <rect x="794" y="421" width="140" height="9" rx="4.5" fill="url(#bar)"/>
+    <text x="1128" y="429" fill="#9aa7bd" text-anchor="end" font-weight="600">5</text>
+
+    <text x="636" y="456" fill="#9aa7bd">Compensation</text>
+    <rect x="794" y="449" width="280" height="9" rx="4.5" fill="#0f1420"/>
+    <rect x="794" y="449" width="196" height="9" rx="4.5" fill="url(#bar)"/>
+    <text x="1128" y="457" fill="#9aa7bd" text-anchor="end" font-weight="600">7</text>
+
+    <text x="636" y="484" fill="#9aa7bd">Work-life balance</text>
+    <rect x="794" y="477" width="280" height="9" rx="4.5" fill="#0f1420"/>
+    <rect x="794" y="477" width="224" height="9" rx="4.5" fill="url(#bar)"/>
+    <text x="1128" y="485" fill="#9aa7bd" text-anchor="end" font-weight="600">8</text>
+
+    <text x="636" y="512" fill="#9aa7bd">Job security</text>
+    <rect x="794" y="505" width="280" height="9" rx="4.5" fill="#0f1420"/>
+    <rect x="794" y="505" width="252" height="9" rx="4.5" fill="url(#bar)"/>
+    <text x="1128" y="513" fill="#9aa7bd" text-anchor="end" font-weight="600">9</text>
+  </g>
+
+  <!-- SWOT -->
+  <text x="48" y="576" fill="#e8edf6" font-size="18" font-weight="700">SWOT analysis</text>
+  <text x="48" y="598" fill="#66748e" font-size="13.5">Strengths &amp; Weaknesses are internal; Opportunities &amp; Threats are external.</text>
+
+  <!-- SWOT card: Join the startup -->
+  <rect x="48" y="616" width="540" height="172" rx="12" fill="url(#panel)" stroke="#2c3850"/>
+  <text x="72" y="646" fill="#e8edf6" font-size="16" font-weight="700">Join the startup</text>
+  <!-- quadrants -->
+  <rect x="72" y="660" width="240" height="52" rx="8" fill="rgba(78,198,179,0.13)" stroke="#2f6f5e55"/>
+  <text x="86" y="680" fill="#4ec6b3" font-size="11" font-weight="700" letter-spacing="0.5">STRENGTHS</text>
+  <text x="86" y="700" fill="#e8edf6" font-size="12">High growth ceiling; ownership &amp; equity</text>
+  <rect x="324" y="660" width="240" height="52" rx="8" fill="rgba(240,122,134,0.13)" stroke="#6b333955"/>
+  <text x="338" y="680" fill="#f07a86" font-size="11" font-weight="700" letter-spacing="0.5">WEAKNESSES</text>
+  <text x="338" y="700" fill="#e8edf6" font-size="12">Income volatility; longer hours</text>
+  <rect x="72" y="720" width="240" height="52" rx="8" fill="rgba(110,168,254,0.10)" stroke="#35507f55"/>
+  <text x="86" y="740" fill="#6ea8fe" font-size="11" font-weight="700" letter-spacing="0.5">OPPORTUNITIES</text>
+  <text x="86" y="760" fill="#e8edf6" font-size="12">Ground-floor role; equity upside</text>
+  <rect x="324" y="720" width="240" height="52" rx="8" fill="rgba(244,184,96,0.14)" stroke="#6b532655"/>
+  <text x="338" y="740" fill="#f4b860" font-size="11" font-weight="700" letter-spacing="0.5">THREATS</text>
+  <text x="338" y="760" fill="#e8edf6" font-size="12">Runway / funding risk</text>
+
+  <!-- SWOT card: Stay at current job -->
+  <rect x="612" y="616" width="540" height="172" rx="12" fill="url(#panel)" stroke="#2c3850"/>
+  <text x="636" y="646" fill="#e8edf6" font-size="16" font-weight="700">Stay at current job</text>
+  <rect x="636" y="660" width="240" height="52" rx="8" fill="rgba(78,198,179,0.13)" stroke="#2f6f5e55"/>
+  <text x="650" y="680" fill="#4ec6b3" font-size="11" font-weight="700" letter-spacing="0.5">STRENGTHS</text>
+  <text x="650" y="700" fill="#e8edf6" font-size="12">Stability; known environment</text>
+  <rect x="888" y="660" width="240" height="52" rx="8" fill="rgba(240,122,134,0.13)" stroke="#6b333955"/>
+  <text x="902" y="680" fill="#f07a86" font-size="11" font-weight="700" letter-spacing="0.5">WEAKNESSES</text>
+  <text x="902" y="700" fill="#e8edf6" font-size="12">Limited growth; plateauing</text>
+  <rect x="636" y="720" width="240" height="52" rx="8" fill="rgba(110,168,254,0.10)" stroke="#35507f55"/>
+  <text x="650" y="740" fill="#6ea8fe" font-size="11" font-weight="700" letter-spacing="0.5">OPPORTUNITIES</text>
+  <text x="650" y="760" fill="#e8edf6" font-size="12">Internal moves; steady progression</text>
+  <rect x="888" y="720" width="240" height="52" rx="8" fill="rgba(244,184,96,0.14)" stroke="#6b532655"/>
+  <text x="902" y="740" fill="#f4b860" font-size="11" font-weight="700" letter-spacing="0.5">THREATS</text>
+  <text x="902" y="760" fill="#e8edf6" font-size="12">Stagnation; skills falling behind</text>
+</svg>
